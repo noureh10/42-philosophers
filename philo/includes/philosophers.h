@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 15:25:28 by nechaara          #+#    #+#             */
-/*   Updated: 2024/03/25 18:11:59 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/03/26 18:00:36 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@
 // MACROS
 #define WRONG_EXEC "Error - Wrong exec"
 #define NO_EAT_LIMIT -1
-
+// INDICES MACROS
+#define NUMBER_OF_PHILOS_INDEX 0
+#define TIME_TO_DIE_INDEX 1
+#define TIME_TO_EAT_INDEX 2
+#define TIME_TO_SLEEP_INDEX 3
+#define EAT_LIMIT_INDEX 4
 // ENUMS
 
 typedef enum e_state
@@ -62,8 +67,11 @@ typedef struct s_table
 	size_t	numbers_of_philos;
 	size_t	time_to_die;
 	size_t	time_to_eat;
+	size_t	time_to_sleep;
 	int		eat_limit;
 }	t_table;
 
 // FUNCTIONS
-int	error_handler(char *message);
+int		error_handler(char *message);
+long	ft_strtol(const char *nptr, char **endptr, int base);
+bool	invalid_arg(int ac, char **av);
