@@ -6,18 +6,18 @@
 #    By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/25 18:12:31 by nechaara          #+#    #+#              #
-#    Updated: 2024/03/25 18:14:24 by nechaara         ###   ########.fr        #
+#    Updated: 2024/03/26 18:11:37 by nechaara         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRCS = src/main.c src/error_handling.c
+SRCS = src/main.c src/error_handling.c src/parsing.c src/parsing_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -O3
+CFLAGS = -g -fsanitize=address #-Wall -Wextra -Werror -O3
 RM = rm -f
 
 GREEN=\033[0;32m
