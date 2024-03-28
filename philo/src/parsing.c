@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 18:44:57 by nechaara          #+#    #+#             */
-/*   Updated: 2024/03/28 14:47:47 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:23:16 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ bool	invalid_arg(int ac, char **av)
 	index = 1;
 	while (av[index])
 		if (!ft_is_string_number(av[index++]))
-			return (false);
+			return (!error_handler(WRONG_ARGS));
 	index = 1;
 	while (av[index])
 	{
 		if (!condition_checker(av[index], min_argv_val[index - 1]))
-			return (false);
+			return (!error_handler(WRONG_ARGS));
 		index++;
 	}
 	return (true);

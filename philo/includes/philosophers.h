@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 15:25:28 by nechaara          #+#    #+#             */
-/*   Updated: 2024/03/26 18:00:36 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:23:44 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 #include <pthread.h>
 
 // MACROS
-#define WRONG_EXEC "Error - Wrong exec"
+#define WRONG_EXEC "Error - Wrong exec ./philo [n1] [n2] [n3] [n4] ..[n5].."
+#define WRONG_ARGS "Error - Program only takes positive numbers as arguments."
 #define NO_EAT_LIMIT -1
 // INDICES MACROS
 #define NUMBER_OF_PHILOS_INDEX 0
