@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 18:44:57 by nechaara          #+#    #+#             */
-/*   Updated: 2024/03/26 18:23:18 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/03/28 14:47:47 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-static size_t ft_strlen(char *str)
+static size_t	ft_strlen(char *str)
 {
 	size_t	index;
 
@@ -22,12 +22,12 @@ static size_t ft_strlen(char *str)
 	return (index);
 }
 
-static int     ft_isdigit(int c)
+static int	ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
 }
 
-static int ft_is_string_number(char *str)
+static int	ft_is_string_number(char *str)
 {
 	int	i;
 	int	sign_count;
@@ -51,7 +51,7 @@ static int ft_is_string_number(char *str)
 	return (1);
 }
 
-static bool condition_checker(char *str, int minimum)
+static bool	condition_checker(char *str, int minimum)
 {
 	int	temporary_value;
 
@@ -63,11 +63,11 @@ static bool condition_checker(char *str, int minimum)
 
 // TODO : Need to find the minimum values to each one of the argv
 
-bool  invalid_arg(int ac, char **av)
+bool	invalid_arg(int ac, char **av)
 {
 	size_t	index;
 	int		min_argv_val[5];
-	
+
 	min_argv_val[NUMBER_OF_PHILOS_INDEX] = 0;
 	min_argv_val[TIME_TO_DIE_INDEX] = 0;
 	min_argv_val[TIME_TO_EAT_INDEX] = 0;
@@ -79,7 +79,10 @@ bool  invalid_arg(int ac, char **av)
 			return (false);
 	index = 1;
 	while (av[index])
-		if (condition_checker(av[index++], min_argv_val[index - 1]))
+	{
+		if (!condition_checker(av[index], min_argv_val[index - 1]))
 			return (false);
+		index++;
+	}
 	return (true);
 }

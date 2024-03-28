@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 15:24:50 by nechaara          #+#    #+#             */
-/*   Updated: 2024/03/26 18:21:26 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/03/28 14:48:05 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 static int	manage_philosophers(int ac, char **av)
 {
 	if (!invalid_arg(ac, av))
-	{
-		printf("byebye");
-		return (1);
-	}
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	if (!((ac == 5) ^ (ac == 6)))
 		return (error_handler(WRONG_EXEC));
