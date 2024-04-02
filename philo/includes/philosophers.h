@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 15:25:28 by nechaara          #+#    #+#             */
-/*   Updated: 2024/03/28 16:23:44 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:14:48 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@ typedef struct s_fork
 	int		fork_id;
 }	t_fork;
 
+typedef struct s_fork_list
+{
+	struct	s_fork *current;
+	struct	s_fork *previous;
+	struct	s_fort *next;
+}	t_fork_list;
+
 typedef struct s_hunger
 {
 	size_t	eat_counter;
@@ -53,26 +60,32 @@ typedef struct s_philo
 	int			philosophers_id;
 	t_state		state_of_philo;
 	t_hunger	hunger_status;
-	t_fork		left_fork;
-	t_fork		right_fork;
+	t_fork		*left_fork;
+	t_fork		*right_fork;
 }	t_philo;
 
-typedef struct s_list
+typedef struct s_philo_list
 {
-	struct s_philo	current_philo;
+	struct s_philo	*current_philo;
 	struct s_philo	*next;
-}	t_list;
+}	t_philo_list;
 
 typedef struct s_table
 {
-	size_t	numbers_of_philos;
-	size_t	time_to_die;
-	size_t	time_to_eat;
-	size_t	time_to_sleep;
-	int		eat_limit;
+	long	numbers_of_philos;
+	long	time_to_die;
+	long	time_to_eat;
+	long	time_to_sleep;
+	long	eat_limit;
 }	t_table;
 
-// FUNCTIONS
-int		error_handler(char *message);
-long	ft_strtol(const char *nptr, char **endptr, int base);
-bool	invalid_arg(int ac, char **av);
+// PARSING FUNCTIONS
+int				error_handler(char *message);
+long			ft_strtol(const char *nptr, char **endptr, int base);
+bool			invalid_arg(int ac, char **av);
+// INIT FUNCTIONS
+t_table			*init_table(int ac, char **av);
+t_philo_list	*philosophers_list_init(t_table *table, t_fork_list *fork_list);
+t_fork_list		*fork_list_init(t_table *table);
+// UNIT FUNCTIONS
+void			unit(t_fork_list *fork_list, t_philo_list *philo_list, t_table *table)
