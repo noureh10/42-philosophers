@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 15:25:28 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/02 17:14:48 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:45:59 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,7 @@ t_table			*init_table(int ac, char **av);
 t_philo_list	*philosophers_list_init(t_table *table, t_fork_list *fork_list);
 t_fork_list		*fork_list_init(t_table *table);
 // UNIT FUNCTIONS
-void			unit(t_fork_list *fork_list, t_philo_list *philo_list, t_table *table)
+void			unit(t_fork_list *fork_list, t_philo_list *philo_list, t_table *table);
+void			*unit_fork_list(t_fork_list *fork_list);
+void			*unit_philo_list(t_philo_list *philo_list);
+void			*unit_table(t_table *table);
