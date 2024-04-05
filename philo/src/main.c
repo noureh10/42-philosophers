@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 15:24:50 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/03 17:46:11 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/05 23:10:13 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ static int	philosophers_startup(int ac, char **av)
 	philo_table = init_table(ac, av);
 	if (philo_table)
 		return (EXIT_FAILURE);
-	fork_list = fork_list_init(philo_table)
+	fork_list = fork_list_init(philo_table);
 	if (!fork_list)
-		return (unit_table(table), EXIT_FAILURE);
+		return (unit_table(philo_table), EXIT_FAILURE);
 	philo_list = philosophers_list_init(philo_table, fork_list);
 	if (!philo_list)
-		return (unit_table(table), unit_fork_list(fork_list), EXIT_FAILURE);
+		return (unit_table(philo_table), unit_fork_list(fork_list), EXIT_FAILURE);
 	return_status = manage_philosophers(philo_table, philo_list, fork_list);
 	unit(fork_list, philo_list, philo_table);
 	return (return_status);
