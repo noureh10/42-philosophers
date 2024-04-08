@@ -6,14 +6,14 @@
 #    By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/25 18:12:31 by nechaara          #+#    #+#              #
-#    Updated: 2024/04/02 17:10:07 by nechaara         ###   ########.fr        #
+#    Updated: 2024/04/08 14:45:19 by nechaara         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 SRCS = 	src/main.c src/error_handling.c src/parsing.c src/parsing_utils.c \
-		src/init.c src/unit.c
+		src/init.c src/unit.c src/time.c src/init_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
