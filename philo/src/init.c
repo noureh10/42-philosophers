@@ -6,28 +6,30 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 11:51:52 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/03 16:10:33 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/08 18:17:54 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-static void generate_philo(size_t *index, t_philo *current_philosopher, 
-	t_fork_list *fork_list, t_hunger *hunger_status)
+pthread_t *init_id_array(t_philo_list *philo_list, t_table *philo_table)
 {
-	if (!index || !current_philosopher || !fork_list || hunger_status)
-		return (NULL);
-	current_philosopher->philosophers_id = index;
-	current_philosopher->hunger_status = *hunger_status;
-	current_philosopher->left_fork = fork_list->current;
-	current_philosopher->right_fork = fork_list->previous;
-}
+	pthread_t	*thread_array;
+	size_t		index;
 
-static void generate_fork(size_t *index, t_fork *current_fork)
-{
-	if (!index || !current_fork)
+	index = 0;
+	if (!philo_table)
 		return (NULL);
-	current_fork->fork_id = index;
+	thread_array = malloc(sizeof(pthread_t) * philo_table->numbers_of_philos);
+	if (!thread_array)
+		return (NULL);
+	while (philo_list)
+	{
+		thread_array[index] = (pthread_t) philo_list->content->philosophers_id;
+		index++;
+		philo_list = philo_list->next;
+	}
+	return (thread_array);
 }
 
 t_fork_list *fork_list_init(t_table *table)
@@ -48,6 +50,7 @@ t_fork_list *fork_list_init(t_table *table)
 		index++;
 		fork_list = fork_list->next;
 	}
+	return (fork_list);
 }
 
 t_table *init_table(int ac, char **av)
@@ -71,9 +74,9 @@ t_table *init_table(int ac, char **av)
 t_philo_list	*philosophers_list_init(t_table *table, t_fork_list *fork_list)
 {
 	t_philo_list		*philo_list;
-	t_philo		current_philosopher;
-	size_t		index;
-	t_hunger	hunger_status;
+	t_philo				current_philosopher;
+	size_t				index;
+	t_hunger			hunger_status;
 
 	if (!table)
 		return (NULL);
