@@ -3,87 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 16:56:29 by nechaara          #+#    #+#             */
-/*   Updated: 2024/03/28 14:46:42 by nechaara         ###   ########.fr       */
+/*   Created: 2024/04/09 16:36:14 by nechaara          #+#    #+#             */
+/*   Updated: 2024/04/11 15:14:12 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-static int	is_whitespace(char c)
+static void apply_bounds(t_bound *min, t_bound *max)
 {
-	return (c == ' ' || (c >= '\t' && c <= '\r'));
+	min->number_of_philos = NUMBER_OF_PHILOS_MIN;
+	min->time_to_die = TIME_TO_DIE_MIN;
+	min->time_to_eat = TIME_TO_EAT_MIN;
+	min->time_to_sleep = TIME_TO_SLEEP_MIN;
+	max->number_of_philos = NUMBER_OF_PHILOS_MAX;
+	max->time_to_die = TIME_TO_DIE_MAX;
+	max->time_to_eat = TIME_TO_EAT_MAX;
+	max->time_to_sleep = TIME_TO_SLEEP_MAX;
 }
 
-static int	is_valid_char(char c, int base)
+void apply_limits(t_limits *limit)
 {
-	if ((base <= 10 && (c >= '0' && c < '0' + base))
-		|| (base > 10 && ((c >= '0' && c <= '9')
-				|| (c >= 'a' && c < 'a' + base - 10)
-				|| (c >= 'A' && c < 'A' + base - 10))))
-		return (1);
-	return (0);
-}
-
-static int	get_digit_value(char c)
-{
-	if (c >= '0' && c <= '9')
-		return (c - '0');
-	else if (c >= 'a' && c <= 'z')
-		return (c - 'a' + 10);
-	else if (c >= 'A' && c <= 'Z')
-		return (c - 'A' + 10);
-	return (0);
-}
-
-static void	handle_sign_and_prefix(const char **s, int *sign, int *base)
-{
-	while (is_whitespace(**s))
-		(*s)++;
-	if (**s == '-')
-	{
-		*sign = -1;
-		(*s)++;
-	}
-	else if (**s == '+')
-	{
-		*sign = 1;
-		(*s)++;
-	}
-	if ((*base == 0 || *base == 16) && **s == '0')
-	{
-		*s += 1;
-		if (**s == 'x' || **s == 'X')
-		{
-			*s += 1;
-			*base = 16;
-		}
-		else
-			*base = 8;
-	}
-	if (*base == 0)
-		*base = 10;
-}
-
-long	ft_strtol(const char *nptr, char **endptr, int base)
-{
-	const char	*s;
-	long		result;
-	int			sign;
-	int			digit;
-
-	s = nptr;
-	result = 0;
-	sign = 1;
-	handle_sign_and_prefix(&s, &sign, &base);
-	while (is_valid_char(*s, base))
-	{
-		digit = get_digit_value(*s++);
-		result = result * base + digit;
-	}
-	if (endptr)
-		*endptr = (char *)s;
-	return (result * sign);
+	apply_bounds(&limit->arg_min, &limit->arg_max);
 }

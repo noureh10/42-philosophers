@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 15:24:50 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/08 18:15:59 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:14:47 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int manage_philosophers(t_table *table, t_philo_list *philo_list,
 		pthread_create(&id_array[index], NULL, test, (void *)&id_array[index]);
 	return (1);
 }
-
 
 static int	philosophers_startup(int ac, char **av)
 {

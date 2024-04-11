@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 11:51:52 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/08 18:17:54 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:50:43 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ pthread_t *init_id_array(t_philo_list *philo_list, t_table *philo_table)
 	index = 0;
 	if (!philo_table)
 		return (NULL);
-	thread_array = malloc(sizeof(pthread_t) * philo_table->numbers_of_philos);
+	thread_array = malloc(sizeof(pthread_t) * (int) philo_table->numbers_of_philos);
 	if (!thread_array)
 		return (NULL);
 	while (philo_list)
@@ -55,14 +55,14 @@ t_fork_list *fork_list_init(t_table *table)
 
 t_table *init_table(int ac, char **av)
 {
-	t_table *table;
+	t_table	*table;
 
 	table = (t_table *)malloc(sizeof(t_table));
 	if (!table)
 		return (NULL);
 	table->numbers_of_philos = ft_strtol(av[NUMBER_OF_PHILOS_INDEX], NULL, 10);
 	table->time_to_die = ft_strtol(av[TIME_TO_DIE_INDEX], NULL, 10);
-	table->time_to_eat = ft_strtol(av[TIME_TO_DIE_INDEX], NULL, 10);
+	table->time_to_eat = ft_strtol(av[TIME_TO_EAT_INDEX], NULL, 10);
 	table->time_to_sleep = ft_strtol(av[TIME_TO_SLEEP_INDEX], NULL, 10);
 	if (ac == 6)
 		table->eat_limit = ft_strtol(av[EAT_LIMIT_INDEX], NULL, 10);
@@ -84,7 +84,7 @@ t_philo_list	*philosophers_list_init(t_table *table, t_fork_list *fork_list)
 	if (!philo_list)
 		return (NULL);
 	index = 1;
-	init_hunger(table ,&hunger_status);
+	init_hunger(table, &hunger_status);
 	while (index < table->numbers_of_philos && philo_list)
 	{
 		generate_philo(&index, &current_philosopher, fork_list, &hunger_status);

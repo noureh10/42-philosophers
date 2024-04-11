@@ -3,86 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 18:44:57 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/03 16:10:34 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:55:33 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-static size_t	ft_strlen(char *str)
+static void set_argv_value_to_struct(t_bound *values, int ac, char **av)
 {
-	size_t	index;
-
-	index = 0;
-	while (str[index])
-		index++;
-	return (index);
+	values->number_of_philos = ft_strtol(av[NUMBER_OF_PHILOS_INDEX], NULL, 10);
+	values->time_to_die = ft_strtol(av[TIME_TO_DIE_INDEX], NULL, 10);
+	values->time_to_eat = ft_strtol(av[TIME_TO_EAT_INDEX], NULL, 10);
+	values->time_to_sleep = ft_strtol(av[TIME_TO_SLEEP_INDEX], NULL, 10);
 }
 
-static int	ft_isdigit(int c)
+static bool	condition_checker(t_limits *limits, int ac, char **av)
 {
-	return (c >= '0' && c <= '9');
-}
-
-static int	ft_is_string_number(char *str)
-{
-	int	i;
-	int	sign_count;
-
-	i = 0;
-	sign_count = 0;
-	while (str[i])
-	{
-		if (str[i] == '-' || str[i] == '+')
-		{
-			sign_count++;
-			if (i > 0)
-				return (0);
-		}
-		else if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
-	}
-	if (ft_strlen(str) == 1 && sign_count == 1)
-		return (0);
-	return (1);
-}
-
-static bool	condition_checker(char *str, int minimum)
-{
-	int	temporary_value;
-
-	temporary_value = ft_strtol(str, NULL, 10);
-	if (temporary_value <= minimum)
-		return (false);
+	t_bound values;
+	
+	set_argv_value_to_struct(&values, ac, av);
+	if (!(limits->arg_max.number_of_philos < values.number_of_philos
+		|| limits->arg_min.number_of_philos > values.number_of_philos
+		|| limits->arg_max.time_to_die < values.time_to_die
+		|| limits->arg_min.time_to_die > values.time_to_die
+		|| limits->arg_max.time_to_eat < values.time_to_eat
+		|| limits->arg_min.time_to_eat > values.time_to_eat
+		|| limits->arg_max.time_to_sleep < values.time_to_sleep
+		|| limits->arg_min.time_to_sleep > values.time_to_sleep))
+			{
+				printf("ici");
+				return (false);
+			}
 	return (true);
 }
 
-// TODO : Need to find the minimum values to each one of the argv
-
 bool	invalid_arg(int ac, char **av)
 {
-	size_t	index;
-	int		min_argv_val[5];
+	t_limits limit;
 
-	min_argv_val[NUMBER_OF_PHILOS_INDEX] = 0;
-	min_argv_val[TIME_TO_DIE_INDEX] = 0;
-	min_argv_val[TIME_TO_EAT_INDEX] = 0;
-	min_argv_val[TIME_TO_SLEEP_INDEX] = 0;
-	min_argv_val[EAT_LIMIT_INDEX] = 0;
-	index = 1;
-	while (av[index])
-		if (!ft_is_string_number(av[index++]))
-			return (!error_handler(WRONG_ARGS));
-	index = 1;
-	while (av[index])
-	{
-		if (!condition_checker(av[index], min_argv_val[index - 1]))
-			return (!error_handler(WRONG_ARGS));
-		index++;
-	}
+	apply_limits(&limit);
+	if (!condition_checker(&limit, ac, av))
+		return (false);
 	return (true);
 }
