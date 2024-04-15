@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   unit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:56:48 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/09 15:46:54 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/15 10:39:26 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-/*
 void *unit_id_array(pthread_t *id_array)
 {
 	size_t index;
@@ -26,7 +25,6 @@ void *unit_id_array(pthread_t *id_array)
 	id_array = NULL;
 	return (NULL);
 }
-*/
 
 void *unit_fork_list(t_fork_list *fork_list)
 {
@@ -53,7 +51,8 @@ void *unit_philo_list(t_philo_list *philo_list)
 	while (philo_list)
 	{
 		current = philo_list;
-		free(current);
+		pthread_exit(&current->content->philo);
+			free(current);
 		current = NULL;
 		philo_list = philo_list->next;
 	}

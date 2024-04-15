@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 18:44:57 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/11 15:55:33 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:34:27 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ bool	invalid_arg(int ac, char **av)
 	t_limits limit;
 
 	apply_limits(&limit);
+	
 	if (!condition_checker(&limit, ac, av))
 		return (false);
 	return (true);
+	
 }
