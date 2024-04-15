@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:03:57 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/11 15:14:43 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/15 10:47:42 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_fork
 typedef struct s_fork_list
 {
 	struct	s_fork		*content;
+	bool				first_element;
 	struct	s_fork_list *prev;
 	struct	s_fork_list	*next;
 }	t_fork_list;
@@ -55,6 +56,7 @@ typedef struct s_hunger
 typedef struct s_philo
 {
 	int			philosophers_id;
+	pthread_t	philo;
 	t_state		state_of_philo;
 	t_hunger	hunger_status;
 	t_fork		*left_fork;
