@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 18:44:57 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/15 15:34:27 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:56:13 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static bool	condition_checker(t_limits *limits, int ac, char **av)
 	t_bound values;
 	
 	set_argv_value_to_struct(&values, ac, av);
-	if (!(limits->arg_max.number_of_philos < values.number_of_philos
+	if ((limits->arg_max.number_of_philos < values.number_of_philos
 		|| limits->arg_min.number_of_philos > values.number_of_philos
 		|| limits->arg_max.time_to_die < values.time_to_die
 		|| limits->arg_min.time_to_die > values.time_to_die
@@ -33,19 +33,20 @@ static bool	condition_checker(t_limits *limits, int ac, char **av)
 		|| limits->arg_min.time_to_eat > values.time_to_eat
 		|| limits->arg_max.time_to_sleep < values.time_to_sleep
 		|| limits->arg_min.time_to_sleep > values.time_to_sleep))
-			{
-				printf("ici");
 				return (false);
-			}
 	return (true);
 }
 
 bool	invalid_arg(int ac, char **av)
 {
-	t_limits limit;
+	t_limits 	limit;
+	size_t		index;
 
+	index = 1;
+	while (av[index])
+		if (!ft_is_string_number(av[index++]))
+			return (false);
 	apply_limits(&limit);
-	
 	if (!condition_checker(&limit, ac, av))
 		return (false);
 	return (true);

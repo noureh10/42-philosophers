@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 15:24:50 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/15 10:19:29 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:27:19 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,19 @@ static int	philosophers_startup(int ac, char **av)
 	t_philo_list	*philo_list;
 	t_fork_list		*fork_list;
 	int				return_status;
-
+	
+	philo_table = NULL;
+	fork_list = NULL;
+	philo_list = NULL;
 	if (!invalid_arg(ac, av))
 		return (EXIT_FAILURE);
 	philo_table = init_table(ac, av);
 	if (!philo_table)
 		return (EXIT_FAILURE);
-	fork_list = fork_list_init(philo_table);
+	fork_list_init(philo_table, &fork_list);
 	if (!fork_list)
 		return (unit_table(philo_table), EXIT_FAILURE);
-	philo_list = philosophers_list_init(philo_table, fork_list);
+	philosophers_list_init(philo_table, fork_list, &philo_list);
 	if (!philo_list)
 		return (unit_table(philo_table), unit_fork_list(fork_list), EXIT_FAILURE);
 	return_status = manage_philosophers(philo_table, philo_list, fork_list);
