@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 11:51:52 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/16 17:13:01 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/17 01:16:19 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ t_fork_list *fork_list_init(t_table *table, t_fork_list **fork_list)
 	t_fork		current_working_fork;
 	size_t		index;
 	
+	*fork_list = NULL;
 	if (!table)
 		return (NULL);
 	index = 0;
-	fork_list = NULL;
 	while (index < table->numbers_of_philos)
 	{	
 		generate_fork(&index, &current_working_fork);
@@ -113,11 +113,11 @@ void	*philosophers_list_init(t_table *table, t_fork_list *fork_list, t_philo_lis
 	t_philo				current_philosopher;
 	size_t				index;
 	t_hunger			hunger_status;
-
+	
+	*philo_list = NULL;
 	if (!table)
 		return (NULL);
 	index = 0;
-	philo_list = NULL;
 	init_hunger(table, &hunger_status);
 	while (index < table->numbers_of_philos)
 	{

@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   unit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:56:48 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/15 10:39:26 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/17 01:13:03 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
+/*
 void *unit_id_array(pthread_t *id_array)
 {
-	size_t index;
+	int index;
 	
 	index = 0;
 	if (!id_array)
@@ -25,6 +26,7 @@ void *unit_id_array(pthread_t *id_array)
 	id_array = NULL;
 	return (NULL);
 }
+*/
 
 void *unit_fork_list(t_fork_list *fork_list)
 {
