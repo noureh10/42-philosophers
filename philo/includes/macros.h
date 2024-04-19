@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:03:49 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/09 16:05:26 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:23:08 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // MACROS
 #define WRONG_EXEC "Error - Wrong exec ./philo [n1] [n2] [n3] [n4] ..[n5].."
 #define WRONG_ARGS "Error - Program only takes positive numbers as arguments."
-#define ID_ARRAY_NO_INIT "Error - Couldn't init the ID array, needed for threading."
+#define NOT_IN_LIMITS "Error - Arguments are not within the limits"
 #define NO_EAT_LIMIT -1
 // INDICES MACROS
 #define NUMBER_OF_PHILOS_INDEX 1

@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:03:57 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/15 10:47:42 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/19 19:10:01 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,12 @@ typedef struct s_table
 	long	time_to_eat;
 	long	time_to_sleep;
 	long	eat_limit;
+	bool	start_dining;
+	bool	has_philo_died;
 }	t_table;
+
+typedef struct s_time
+{
+	long	starting_time;
+	long	ending_time;
+}	t_time;
