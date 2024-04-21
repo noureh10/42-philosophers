@@ -3,19 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 15:24:50 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/18 18:26:10 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/22 01:35:32 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
+// TODO : Need to figure out how to manage time on each philosophers
 
 static int manage_philosophers(t_table *table, t_philo_list *philo_list, 
 		t_fork_list *fork_list)
 {
+	int	starting_time;
+
+	if (!table || !philo_list || !fork_list)
+		return (-1);
+	starting_time = get_time();
 	return (1);
 }
 
@@ -52,8 +58,7 @@ static int	philosophers_startup(int ac, char **av)
 	philosophers_list_init(philo_table, fork_list, &philo_list);
 	if (!philo_list)
 		return (unit_table(philo_table), unit_fork_list(fork_list), EXIT_FAILURE);
-	check_philo_and_fork_list(philo_list, fork_list);
-	//return_status = manage_philosophers(philo_table, philo_list, fork_list);
+	return_status = manage_philosophers(philo_table, philo_list, fork_list);
 	//unit(fork_list, philo_list, philo_table);
 	return (return_status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:45:02 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/19 20:13:32 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/22 00:28:43 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,12 @@ void init_hunger(t_table *table, t_hunger *hunger)
 void generate_philo(size_t index, t_philo *current_philosopher, 
 	t_fork_list *fork_list, t_hunger *hunger_status)
 {
-	if (!index || !current_philosopher || !fork_list || hunger_status)
+	if (!current_philosopher)
 		return ;
 	current_philosopher->philosophers_id = index;
 	//pthread_create(&current_philosopher->philo, NULL, thread_routine, index);
-	printf("CURRENT INDEX FOR PHILO : %zu\n", index);
 	current_philosopher->hunger_status = *hunger_status;
-	current_philosopher->left_fork = fork_list->content;
-	current_philosopher->right_fork = fork_list->prev->content;
+	current_philosopher->fork = fork_list->content;
 }
 
 void generate_fork(size_t index, t_fork *current_fork)

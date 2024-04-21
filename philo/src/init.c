@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 11:51:52 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/19 20:02:39 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/22 00:29:25 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void	philosophers_list_init(t_table *table, t_fork_list *fork_list, t_philo_list
 		*philo_list = append_node_philo_list(*philo_list, &current_philosopher);
 		if (!philo_list)
 			return ;
+		fork_list = fork_list->next;
 		index++;
 	}
 }
