@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:45:02 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/22 00:28:43 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:45:37 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,24 @@ void init_hunger(t_table *table, t_hunger *hunger)
 	hunger->is_philo_filled = false;
 }
 
-void generate_philo(size_t index, t_philo *current_philosopher, 
-	t_fork_list *fork_list, t_hunger *hunger_status)
+void generate_philo(t_routine *routine)
 {
-	if (!current_philosopher)
+	static t_philo 	*head_of_philo_list;
+	static int		index;
+	
+	if (!routine)
 		return ;
-	current_philosopher->philosophers_id = index;
-	//pthread_create(&current_philosopher->philo, NULL, thread_routine, index);
-	current_philosopher->hunger_status = *hunger_status;
-	current_philosopher->fork = fork_list->content;
+	printf("INIT %d\n", routine->index);
+	routine->current_philosopher.philosophers_id = routine->index;
+	routine->current_philosopher.hunger = routine->hunger_status;
+	routine->current_philosopher.fork = routine->fork_list->content;
+	pthread_create(&routine->current_philosopher.philo, NULL, thread_routine, routine);
 }
 
 void generate_fork(size_t index, t_fork *current_fork)
 {
 	if (!index)
 		return ;
-	//pthread_mutex_init(&current_fork->fork, NULL);
+	pthread_mutex_init(&current_fork->fork, NULL);
 	current_fork->fork_id = index;
 }

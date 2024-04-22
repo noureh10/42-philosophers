@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 11:51:52 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/22 00:29:25 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/22 19:31:15 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ t_table *init_table(int ac, char **av)
 	else
 		table->eat_limit = NO_EAT_LIMIT;
 	table->start_dining = false;
+	table->head_of_philo_list = NULL;
+	table->head_of_fork_list = NULL;
 	return (table);
 }
 
@@ -61,9 +63,8 @@ t_fork_list	*append_node_fork_list(t_fork_list *head, t_fork *fork)
 }
 /**
  * @brief 
- * The fork list init function returns a circular doubly-linked, representing
- * the circular nature of a table. It needs a table to have a context for the 
- * initialization of the fork_list.
+ * The fork list init function returns a doubly-linked, representing a table. 
+ * It needs a table to have a context for the initialization of the fork_list.
  * @param table Table needed for the initialization of the fork_list
  * @param fork_list The double-pointer that we will initialize.
  */
@@ -121,26 +122,29 @@ t_philo_list *append_node_philo_list(t_philo_list *head, t_philo *philo)
  * philo_list.
  * @param table Table needed for the initialization of the philo list.
  * @param fork_list Fork list needed for the initalization of the philo list.
- * @param philo_list The double pointer that we will initialize
+ * @param philo_list The double pointer that we will initialize.
  */
 void	philosophers_list_init(t_table *table, t_fork_list *fork_list, t_philo_list **philo_list)
 {
-	t_philo				current_philosopher;
-	size_t				index;
-	t_hunger			hunger_status;
+	t_routine routine;
 	
 	*philo_list = NULL;
 	if (!table)
 		return ;
-	index = 0;
-	init_hunger(table, &hunger_status);
-	while (index < table->numbers_of_philos)
+	routine.index = 0;
+	routine.table = table;
+	routine.fork_list = fork_list;
+	init_hunger(table, &routine.hunger_status);
+	while (routine.index < table->numbers_of_philos)
 	{
-		generate_philo(index, &current_philosopher, fork_list, &hunger_status);
-		*philo_list = append_node_philo_list(*philo_list, &current_philosopher);
+		generate_philo(&routine);
+		*philo_list = append_node_philo_list(*philo_list, &routine.current_philosopher);
 		if (!philo_list)
 			return ;
-		fork_list = fork_list->next;
-		index++;
+		if (routine.index == 0)
+			routine.table->head_of_philo_list = *philo_list;
+		routine.fork_list = fork_list->next;
+		routine.index++;
 	}
+	table->start_dining = true;
 }

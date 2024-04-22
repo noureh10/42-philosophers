@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 16:52:03 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/05 17:08:17 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:25:59 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+
+
+void	test(int a, int b)
+{
+	
+}
 
 long	get_time(void)
 {
