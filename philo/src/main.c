@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 15:24:50 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/22 01:35:32 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:13:59 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@ static int manage_philosophers(t_table *table, t_philo_list *philo_list,
 		t_fork_list *fork_list)
 {
 	int	starting_time;
+	t_philo_list *temp_head;
 
 	if (!table || !philo_list || !fork_list)
 		return (-1);
-	starting_time = get_time();
-	return (1);
+	while (!table->dead_philo)
+	{
+		sleep(1);
+	}
+	return 0;
 }
 
 // temporary (debug)
