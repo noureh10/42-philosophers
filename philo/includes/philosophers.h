@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 15:25:28 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/19 20:02:52 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:13:08 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ void			philosophers_list_init(t_table *table, t_fork_list *fork_list, t_philo_li
 void			fork_list_init(t_table *table, t_fork_list **fork_list);
 void			init_id_array(t_philo_list *philo_list, t_table *philo_table);
 // INIT UTILS
-void			generate_philo(size_t index, t_philo *current_philosopher, 
-	t_fork_list *fork_list, t_hunger *hunger_status);
+void			generate_philo(t_routine *routine);
 void			generate_fork(size_t index, t_fork *current_fork);
 void			init_hunger(t_table *table, t_hunger *hunger);
 t_fork_list		*create_fork_list_node(t_fork *fork);
@@ -48,4 +47,7 @@ void			*unit_id_array(pthread_t *id_array);
 long			get_time(void);
 void			ft_usleep(int timeinms);
 // THREADING ROUTINE
-void			thread_routine(void);
+void			*thread_routine(t_routine *routine);
+// ACTIONS 
+int				philo_sleep(t_table *table, t_philo *philo);
+int				philo_eat(t_philo_list *philo_list, t_philo *philo, t_table *table, int remaining_ms);

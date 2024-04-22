@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:03:57 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/22 01:22:27 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/22 19:31:21 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ typedef enum e_state
 {
 	EAT,
 	SLEEP,
-	THINK
+	THINK,
+	TRANSIT_STATE
 }	t_state;
 
 typedef struct s_bound
@@ -35,8 +36,8 @@ typedef struct s_limits
 
 typedef struct s_fork
 {
-	pthread_t	fork;
-	int			fork_id;
+	pthread_mutex_t	fork;
+	int				fork_id;
 }	t_fork;
 
 typedef struct s_fork_list
@@ -58,7 +59,7 @@ typedef struct s_philo
 	pthread_t	philo;
 	bool		is_dead;
 	t_state		state_of_philo;
-	t_hunger	hunger_status;
+	t_hunger	hunger;
 	t_fork		*fork;
 }	t_philo;
 
@@ -70,17 +71,22 @@ typedef struct s_philo_list
 
 typedef struct s_table
 {
-	long	numbers_of_philos;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
-	long	eat_limit;
-	bool	start_dining;
-	bool	has_philo_died;
+	long			numbers_of_philos;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	long			eat_limit;
+	bool			start_dining;
+	bool			dead_philo;
+	t_philo_list	*head_of_philo_list;
+	t_fork_list		*head_of_fork_list;
 }	t_table;
 
-typedef struct s_time
+typedef struct s_routine
 {
-	long	starting_time;
-	long	ending_time;
-}	t_time;
+	t_table 		*table;
+	t_fork_list		*fork_list;
+	t_philo			current_philosopher;
+	t_hunger		hunger_status;
+	int				index;
+}	t_routine;

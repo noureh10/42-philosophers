@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:03:49 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/18 18:23:08 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/22 13:07:11 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@
 #define NUMBER_OF_PHILOS_MAX 200
 #define TIME_TO_DIE_MIN 1
 #define TIME_TO_DIE_MAX INT_MAX
-#define TIME_TO_EAT_MIN 60
+#define TIME_TO_EAT_MIN 1
 #define TIME_TO_EAT_MAX INT_MAX
 #define TIME_TO_SLEEP_MIN 1
 #define TIME_TO_SLEEP_MAX INT_MAX
+// ACTIONS MACROS
+#define PHILO_DEAD 0
+#define NULL_PARAMS -1
