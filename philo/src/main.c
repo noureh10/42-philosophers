@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 15:24:50 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/22 18:13:59 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/24 14:57:53 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,20 @@
 static int manage_philosophers(t_table *table, t_philo_list *philo_list, 
 		t_fork_list *fork_list)
 {
-	int	starting_time;
-	t_philo_list *temp_head;
+	t_philo_list	*temp_head_philo;
+	t_fork_list		*temp_head_fork;
 
 	if (!table || !philo_list || !fork_list)
 		return (-1);
-	while (!table->dead_philo)
+	temp_head_philo = philo_list;
+	temp_head_fork = fork_list;
+	
+	while (!table->start_dining)
 	{
-		sleep(1);
+		
+		sleep(1000);
 	}
-	return 0;
+	return (0);
 }
 
 // temporary (debug)

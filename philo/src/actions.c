@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 00:37:29 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/22 15:03:52 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/24 18:40:22 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ int	philo_eat(t_philo_list *philo_list, t_philo *philo, t_table *table, int rema
 	current_time = remaining_ms;
 	right_philo = get_right_philo(philo_list, philo);
 	if (try_lock_ressource(&right_philo->fork->fork, &time))
-		return (philo->is_dead = true, table->dead_philo = true, PHILO_DEAD);
+		return (philo->is_dead = true, table->finished_sim = true, PHILO_DEAD);
 	if (try_lock_ressource(&philo->fork->fork, &time))
-		return (philo->is_dead = true, table->dead_philo = true, PHILO_DEAD);
+		return (philo->is_dead = true, table->finished_sim = true, PHILO_DEAD);
 	philo->state_of_philo = EAT;
 	ft_usleep(table->time_to_eat);
 	philo->state_of_philo = TRANSIT_STATE;
@@ -86,4 +86,18 @@ int	philo_sleep(t_table *table, t_philo *philo)
 	philo->state_of_philo = TRANSIT_STATE;
 	time_at_end = get_time();
 	return (time_at_end - current_time);
+}
+
+typedef struct t_point
+{
+	int x;
+	int y;
+	int z;
+}	t_point;
+
+int test2(t_point p);
+
+int test(void)
+{
+	test2((t_point){3,2,1});
 }

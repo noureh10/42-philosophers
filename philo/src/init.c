@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 11:51:52 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/22 19:31:15 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/24 14:39:29 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void	philosophers_list_init(t_table *table, t_fork_list *fork_list, t_philo_list
 	init_hunger(table, &routine.hunger_status);
 	while (routine.index < table->numbers_of_philos)
 	{
-		generate_philo(&routine);
+		generate_philo(routine);
 		*philo_list = append_node_philo_list(*philo_list, &routine.current_philosopher);
 		if (!philo_list)
 			return ;
@@ -146,5 +146,4 @@ void	philosophers_list_init(t_table *table, t_fork_list *fork_list, t_philo_list
 		routine.fork_list = fork_list->next;
 		routine.index++;
 	}
-	table->start_dining = true;
 }
