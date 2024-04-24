@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:03:57 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/22 19:31:21 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/24 14:14:23 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 typedef enum e_state
 {
+	TRANSIT_STATE,
 	EAT,
 	SLEEP,
-	THINK,
-	TRANSIT_STATE
+	THINK
 }	t_state;
 
 typedef struct s_bound
@@ -77,7 +77,7 @@ typedef struct s_table
 	long			time_to_sleep;
 	long			eat_limit;
 	bool			start_dining;
-	bool			dead_philo;
+	bool			finished_sim;
 	t_philo_list	*head_of_philo_list;
 	t_fork_list		*head_of_fork_list;
 }	t_table;
