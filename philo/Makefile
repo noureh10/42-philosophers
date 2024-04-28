@@ -6,20 +6,20 @@
 #    By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/25 18:12:31 by nechaara          #+#    #+#              #
-#    Updated: 2024/04/22 12:51:53 by nechaara         ###   ########.fr        #
+#    Updated: 2024/04/28 18:11:31 by nechaara         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRCS = 	src/main.c src/error_handling.c src/parsing.c src/parsing_utils.c \
+SRCS = 	src/main.c src/output.c src/parsing.c src/parsing_utils.c \
 		src/ft_strtol.c src/init.c src/unit.c src/time.c src/init_utils.c \
 		src/routine.c src/actions.c
 
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
-CFLAGS = -g -fsanitize=address #-Wall -Wextra -Werror -O3
+CFLAGS = -g #-fsanitize=address #-Wall -Wextra -Werror -O3
 RM = rm -f
 
 GREEN=\033[0;32m
