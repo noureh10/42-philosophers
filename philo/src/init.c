@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 11:51:52 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/24 14:39:29 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/28 18:42:07 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_table *init_table(int ac, char **av)
 	table->start_dining = false;
 	table->head_of_philo_list = NULL;
 	table->head_of_fork_list = NULL;
+	table->finished_sim = false;
 	return (table);
 }
 
@@ -68,23 +69,23 @@ t_fork_list	*append_node_fork_list(t_fork_list *head, t_fork *fork)
  * @param table Table needed for the initialization of the fork_list
  * @param fork_list The double-pointer that we will initialize.
  */
-void	fork_list_init(t_table *table, t_fork_list **fork_list)
+t_fork_list		*fork_list_init(t_table *table)
 {
-	t_fork		current_working_fork;
 	size_t		index;
-	
-	*fork_list = NULL;
-	if (!table)
-		return ;
+	t_fork		*current_fork;
+	t_fork_list	*fork_list;
+
+	fork_list = NULL;
 	index = 0;
 	while (index < table->numbers_of_philos)
 	{	
-		generate_fork(index, &current_working_fork);
-		*fork_list = append_node_fork_list(*fork_list, &current_working_fork);
+		current_fork = generate_fork(index);
+		fork_list = append_node_fork_list(fork_list, current_fork);
 		if (!fork_list)
-			return ;
+			return (NULL);
 		index++;
 	}
+	return (fork_list);
 }
 
 t_philo_list *append_node_philo_list(t_philo_list *head, t_philo *philo)
@@ -124,26 +125,28 @@ t_philo_list *append_node_philo_list(t_philo_list *head, t_philo *philo)
  * @param fork_list Fork list needed for the initalization of the philo list.
  * @param philo_list The double pointer that we will initialize.
  */
-void	philosophers_list_init(t_table *table, t_fork_list *fork_list, t_philo_list **philo_list)
-{
-	t_routine routine;
+t_philo_list	*philosophers_list_init(t_table *table, t_fork_list *fork_list)
+{	
+	t_philo_list	*philo_list;
+	t_philo			*current_philosopher;
+	size_t			index;
+	t_hunger		hunger_status;
 	
-	*philo_list = NULL;
-	if (!table)
-		return ;
-	routine.index = 0;
-	routine.table = table;
-	routine.fork_list = fork_list;
-	init_hunger(table, &routine.hunger_status);
-	while (routine.index < table->numbers_of_philos)
+	philo_list = NULL;
+	index = 0;
+	init_hunger(table, &hunger_status);
+	while (index < table->numbers_of_philos)
 	{
-		generate_philo(routine);
-		*philo_list = append_node_philo_list(*philo_list, &routine.current_philosopher);
+		current_philosopher = generate_philo(index, hunger_status, fork_list);
+		if (!current_philosopher)
+			return (NULL);
+		philo_list = append_node_philo_list(philo_list, current_philosopher);
 		if (!philo_list)
-			return ;
-		if (routine.index == 0)
-			routine.table->head_of_philo_list = *philo_list;
-		routine.fork_list = fork_list->next;
-		routine.index++;
+			return (free(current_philosopher), current_philosopher = NULL, NULL);
+		if (index == 0)
+			table->head_of_philo_list = philo_list;
+		fork_list = fork_list->next;
+		index++;
 	}
+	return (philo_list);
 }

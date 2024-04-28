@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:45:02 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/24 14:35:58 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/28 18:58:37 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,29 @@ void init_hunger(t_table *table, t_hunger *hunger)
 	hunger->is_philo_filled = false;
 }
 
-void generate_philo(t_routine routine)
-{
-	static t_philo 	*head_of_philo_list;
-	static int		index;
+t_philo	*generate_philo(size_t index, t_hunger hunger_status, t_fork_list *fork_list)
+{	
+	t_philo	*current_philosopher;
 	
-	routine.current_philosopher.philosophers_id = routine.index;
-	routine.current_philosopher.hunger = routine.hunger_status;
-	routine.current_philosopher.fork = routine.fork_list->content;
-	pthread_create(&routine.current_philosopher.philo, NULL, thread_routine, &routine);
+	current_philosopher = (t_philo *)malloc(sizeof(t_philo));
+	if (!current_philosopher)
+		return (NULL);
+	current_philosopher->is_dead = false;
+	current_philosopher->already_printed = false;
+	current_philosopher->philosophers_id = index;
+	current_philosopher->hunger = hunger_status;
+	current_philosopher->fork = fork_list->content;
+	return (current_philosopher);
 }
 
-void generate_fork(size_t index, t_fork *current_fork)
+t_fork	*generate_fork(size_t index)
 {
-	if (!index)
-		return ;
+	t_fork	*current_fork;
+
+	current_fork = (t_fork *)malloc(sizeof(t_fork));
+	if (!current_fork)
+		return (NULL);
 	pthread_mutex_init(&current_fork->fork, NULL);
 	current_fork->fork_id = index;
+	return (current_fork);
 }
