@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 16:52:03 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/22 18:25:59 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/28 22:25:45 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ void	ft_usleep(int timeinms)
 
 	time = get_time();
 	while (get_time() - time < timeinms)
-		usleep(timeinms / 10);
+		usleep(500);
 }
