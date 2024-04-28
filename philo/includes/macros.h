@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:03:49 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/22 13:07:11 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/28 18:34:43 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,3 +35,9 @@
 // ACTIONS MACROS
 #define PHILO_DEAD 0
 #define NULL_PARAMS -1
+// MESSAGES FOR OUTPUT MACROS
+#define FORK_TAKEN "has taken a fork"
+#define IS_SLEEPING "is sleeping"
+#define IS_EATING "is eating"
+#define IS_THINKING "is thinking"
+#define IS_DEAD "died"

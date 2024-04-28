@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:03:57 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/24 14:14:23 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/04/28 18:58:01 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ typedef enum e_state
 	TRANSIT_STATE,
 	EAT,
 	SLEEP,
-	THINK
+	THINK,
+	DEAD
 }	t_state;
 
 typedef struct s_bound
@@ -37,7 +38,7 @@ typedef struct s_limits
 typedef struct s_fork
 {
 	pthread_mutex_t	fork;
-	int				fork_id;
+	size_t			fork_id;
 }	t_fork;
 
 typedef struct s_fork_list
@@ -55,9 +56,10 @@ typedef struct s_hunger
 
 typedef struct s_philo
 {
-	int			philosophers_id;
+	size_t		philosophers_id;
 	pthread_t	philo;
 	bool		is_dead;
+	bool		already_printed;
 	t_state		state_of_philo;
 	t_hunger	hunger;
 	t_fork		*fork;
@@ -71,6 +73,7 @@ typedef struct s_philo_list
 
 typedef struct s_table
 {
+	int				starting_time;
 	long			numbers_of_philos;
 	long			time_to_die;
 	long			time_to_eat;
@@ -85,8 +88,5 @@ typedef struct s_table
 typedef struct s_routine
 {
 	t_table 		*table;
-	t_fork_list		*fork_list;
-	t_philo			current_philosopher;
-	t_hunger		hunger_status;
-	int				index;
+	t_philo			*current_philosopher;
 }	t_routine;
