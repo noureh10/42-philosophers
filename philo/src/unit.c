@@ -6,43 +6,11 @@
 /*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:56:48 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/22 00:30:25 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/05 17:32:50 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
-
-/*
-void *unit_id_array(pthread_t *id_array)
-{
-	int index;
-	
-	index = 0;
-	if (!id_array)
-		return (NULL);
-	while (id_array[index])
-		free(id_array[index++]);
-	free(id_array);
-	id_array = NULL;
-	return (NULL);
-}
-*/
-
-void *unit_fork_list(t_fork_list *fork_list)
-{
-	t_fork_list *current;
-	
-	if (!fork_list)
-		return (NULL);
-	while(fork_list)
-	{
-		current = fork_list;
-		free(current);
-		current = NULL;
-		fork_list = fork_list->next;
-	}
-	return (NULL);
-}
 
 void *unit_philo_list(t_philo_list *philo_list)
 {
@@ -53,8 +21,10 @@ void *unit_philo_list(t_philo_list *philo_list)
 	while (philo_list)
 	{
 		current = philo_list;
-		pthread_exit(&current->content->philo);
-			free(current);
+		pthread_exit(&current->content->philo_thread);
+		pthread_mutex_destroy(&current->content->data_lock);
+		pthread_mutex_destroy(&current->content->fork);
+		free(current);
 		current = NULL;
 		philo_list = philo_list->next;
 	}
@@ -70,9 +40,8 @@ void *unit_table(t_table *table)
 	return (NULL);
 }
 
-void	unit(t_fork_list *fork_list, t_philo_list *philo_list, t_table *table)
+void	unit(t_philo_list *philo_list, t_table *table)
 {
-	unit_fork_list(fork_list);
 	unit_philo_list(philo_list);
 	unit_table(table);
 }

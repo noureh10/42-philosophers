@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:36:14 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/23 13:39:06 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/05 14:59:06 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_is_string_number(char *str)
 	return (1);
 }
 
-static void apply_bounds(t_bound *min, t_bound *max)
+static void apply_bounds(t_data *min, t_data *max)
 {
 	min->number_of_philos = NUMBER_OF_PHILOS_MIN;
 	min->time_to_die = TIME_TO_DIE_MIN;

@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 16:52:03 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/28 22:25:45 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:57:19 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
-
-
-void	test(int a, int b)
-{
-	
-}
 
 long	get_time(void)
 {
@@ -28,11 +22,23 @@ long	get_time(void)
 	return (time);
 }
 
-void	ft_usleep(int timeinms)
+long		get_relative_time(t_table *table)
 {
-	long	time;
+	long	current_time;
+	
+	if (!table)
+		return (-1);
+	pthread_mutex_lock(&table->time);
+	current_time = get_time() - table->start_time;
+	pthread_mutex_unlock(&table->time);
+	return (current_time);
+}
 
-	time = get_time();
-	while (get_time() - time < timeinms)
+void	ft_usleep(t_table *table, int time)
+{
+	int	start;
+
+	start = get_time();
+	while (get_relative_time(table) < start + time)
 		usleep(500);
 }

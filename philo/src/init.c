@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 11:51:52 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/28 18:42:07 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/08 14:49:32 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,73 +19,49 @@ t_table *init_table(int ac, char **av)
 	table = (t_table *)malloc(sizeof(t_table));
 	if (!table)
 		return (NULL);
-	table->numbers_of_philos = ft_strtol(av[NUMBER_OF_PHILOS_INDEX], NULL, 10);
-	table->time_to_die = ft_strtol(av[TIME_TO_DIE_INDEX], NULL, 10);
-	table->time_to_eat = ft_strtol(av[TIME_TO_EAT_INDEX], NULL, 10);
-	table->time_to_sleep = ft_strtol(av[TIME_TO_SLEEP_INDEX], NULL, 10);
-	if (ac == 6)
-		table->eat_limit = ft_strtol(av[EAT_LIMIT_INDEX], NULL, 10);
-	else
-		table->eat_limit = NO_EAT_LIMIT;
+	table->philo_died = false;
 	table->start_dining = false;
-	table->head_of_philo_list = NULL;
-	table->head_of_fork_list = NULL;
-	table->finished_sim = false;
+	table->start_time = 0;
+	table->data.number_of_philos = ft_strtol(av[NUMBER_OF_PHILOS_INDEX], NULL, 10);
+	table->data.time_to_die = ft_strtol(av[TIME_TO_DIE_INDEX], NULL, 10);
+	table->data.time_to_eat = ft_strtol(av[TIME_TO_EAT_INDEX], NULL, 10);
+	table->data.time_to_sleep = ft_strtol(av[TIME_TO_SLEEP_INDEX], NULL, 10);
+	if (ac == 6)
+		table->data.number_of_required_meals = ft_strtol(av[NUMBER_OF_MEALS_INDEX], NULL, 10);
+	else
+		table->data.number_of_required_meals = NO_EAT_LIMIT;
+	pthread_mutex_init(&table->table, NULL);
+	pthread_mutex_init(&table->print, NULL);
+	pthread_mutex_init(&table->time, NULL);
 	return (table);
 }
 
-t_fork_list	*append_node_fork_list(t_fork_list *head, t_fork *fork)
+static t_philo_list	*create_philo_list_node(t_philo *philo)
 {
-	static	t_fork_list		*last_node_reference;
-	t_fork_list				*new_node_reference;
-	t_fork_list				*current_node_reference;
+	t_philo_list *node;
 	
-	new_node_reference = create_fork_list_node(fork);
-	if (!new_node_reference)
+	node = (t_philo_list *)malloc(sizeof(t_philo_list));
+	if (!node)
 		return (NULL);
-	if (!last_node_reference)
-	{
-		if (!head)
-			return (new_node_reference);
-		current_node_reference = head;
-		while (current_node_reference->next)
-			current_node_reference = current_node_reference->next;
-		current_node_reference->next = new_node_reference;
-		last_node_reference = new_node_reference;
-		new_node_reference->prev = last_node_reference;
-	}
-	else
-	{
-		last_node_reference->next = new_node_reference;
-		new_node_reference->prev = last_node_reference;
-		last_node_reference = new_node_reference;
-	}
-	return (head);
+	node->content = philo;
+	node->next = NULL;
+	return (node);
 }
-/**
- * @brief 
- * The fork list init function returns a doubly-linked, representing a table. 
- * It needs a table to have a context for the initialization of the fork_list.
- * @param table Table needed for the initialization of the fork_list
- * @param fork_list The double-pointer that we will initialize.
- */
-t_fork_list		*fork_list_init(t_table *table)
-{
-	size_t		index;
-	t_fork		*current_fork;
-	t_fork_list	*fork_list;
 
-	fork_list = NULL;
-	index = 0;
-	while (index < table->numbers_of_philos)
-	{	
-		current_fork = generate_fork(index);
-		fork_list = append_node_fork_list(fork_list, current_fork);
-		if (!fork_list)
-			return (NULL);
-		index++;
-	}
-	return (fork_list);
+static t_philo	*generate_philo(size_t index)
+{	
+	t_philo	*current_philosopher;
+	
+	current_philosopher = (t_philo *)malloc(sizeof(t_philo));
+	if (!current_philosopher)
+		return (NULL);
+	current_philosopher->is_dead = false;
+	current_philosopher->philosophers_id = index;
+	current_philosopher->last_meal = 0;
+	current_philosopher->number_of_meals = 0;
+	pthread_mutex_init(&current_philosopher->fork, NULL);
+	pthread_mutex_init(&current_philosopher->data_lock, NULL);
+	return (current_philosopher);
 }
 
 t_philo_list *append_node_philo_list(t_philo_list *head, t_philo *philo)
@@ -106,10 +82,12 @@ t_philo_list *append_node_philo_list(t_philo_list *head, t_philo *philo)
 			current_node_reference = current_node_reference->next;
 		current_node_reference->next = new_node_reference;
 		last_node_reference = new_node_reference;
+		new_node_reference->prev = last_node_reference;
 	}
 	else
 	{
 		last_node_reference->next = new_node_reference;
+		new_node_reference->prev = last_node_reference;
 		last_node_reference = new_node_reference;
 	}
 	return (head);
@@ -125,27 +103,24 @@ t_philo_list *append_node_philo_list(t_philo_list *head, t_philo *philo)
  * @param fork_list Fork list needed for the initalization of the philo list.
  * @param philo_list The double pointer that we will initialize.
  */
-t_philo_list	*philosophers_list_init(t_table *table, t_fork_list *fork_list)
+t_philo_list	*philosophers_list_init(t_table *table)
 {	
 	t_philo_list	*philo_list;
 	t_philo			*current_philosopher;
 	size_t			index;
-	t_hunger		hunger_status;
 	
 	philo_list = NULL;
 	index = 0;
-	init_hunger(table, &hunger_status);
-	while (index < table->numbers_of_philos)
+	while (index < table->data.number_of_philos)
 	{
-		current_philosopher = generate_philo(index, hunger_status, fork_list);
+		current_philosopher = generate_philo(index);
 		if (!current_philosopher)
 			return (NULL);
 		philo_list = append_node_philo_list(philo_list, current_philosopher);
 		if (!philo_list)
 			return (free(current_philosopher), current_philosopher = NULL, NULL);
 		if (index == 0)
-			table->head_of_philo_list = philo_list;
-		fork_list = fork_list->next;
+			table->philo_list_head = philo_list;
 		index++;
 	}
 	return (philo_list);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 18:44:57 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/18 18:22:57 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:01:20 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-static void set_argv_value_to_struct(t_bound *values, int ac, char **av)
+static void set_argv_value_to_struct(t_data *values, int ac, char **av)
 {
 	values->number_of_philos = ft_strtol(av[NUMBER_OF_PHILOS_INDEX], NULL, 10);
 	values->time_to_die = ft_strtol(av[TIME_TO_DIE_INDEX], NULL, 10);
@@ -22,7 +22,7 @@ static void set_argv_value_to_struct(t_bound *values, int ac, char **av)
 
 static bool	condition_checker(t_limits *limits, int ac, char **av)
 {
-	t_bound values;
+	t_data values;
 	
 	set_argv_value_to_struct(&values, ac, av);
 	if ((limits->arg_max.number_of_philos < values.number_of_philos

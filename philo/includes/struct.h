@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:03:57 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/28 18:58:01 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:40:36 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,79 +14,61 @@
 
 typedef enum e_state
 {
-	TRANSIT_STATE,
+	FORK,
 	EAT,
 	SLEEP,
 	THINK,
 	DEAD
 }	t_state;
 
-typedef struct s_bound
+typedef struct s_data
 {
-	long	number_of_philos;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
-}	t_bound;
+	size_t	number_of_philos;
+	size_t	time_to_die;
+	size_t	time_to_eat;
+	size_t	time_to_sleep;
+	size_t	number_of_required_meals;
+}	t_data;
 
 typedef struct s_limits
 {
-	t_bound arg_max;
-	t_bound arg_min;
+	t_data arg_max;
+	t_data arg_min;
 }	t_limits;
-
-typedef struct s_fork
-{
-	pthread_mutex_t	fork;
-	size_t			fork_id;
-}	t_fork;
-
-typedef struct s_fork_list
-{
-	struct	s_fork		*content;
-	struct	s_fork_list *prev;
-	struct	s_fork_list	*next;
-}	t_fork_list;
-
-typedef struct s_hunger
-{
-	size_t	eat_counter;
-	bool	is_philo_filled;
-}	t_hunger;
 
 typedef struct s_philo
 {
-	size_t		philosophers_id;
-	pthread_t	philo;
-	bool		is_dead;
-	bool		already_printed;
-	t_state		state_of_philo;
-	t_hunger	hunger;
-	t_fork		*fork;
+	size_t			philosophers_id;
+	pthread_t		philo_thread;
+	pthread_mutex_t	data_lock;
+	unsigned int	last_meal;
+	size_t			number_of_meals;
+	bool			is_dead;
+	pthread_mutex_t	fork;
 }	t_philo;
 
 typedef struct s_philo_list
 {
 	struct s_philo		*content;
 	struct s_philo_list	*next;
+	struct s_philo_list *prev;
 }	t_philo_list;
 
 typedef struct s_table
 {
-	int				starting_time;
-	long			numbers_of_philos;
-	long			time_to_die;
-	long			time_to_eat;
-	long			time_to_sleep;
-	long			eat_limit;
+	long			start_time;
+	t_data			data;
+	t_philo_list	*philo_list_head;
+	bool			philo_died;
 	bool			start_dining;
-	bool			finished_sim;
-	t_philo_list	*head_of_philo_list;
-	t_fork_list		*head_of_fork_list;
+	pthread_mutex_t	table;
+	pthread_mutex_t	print;
+	pthread_mutex_t	time;
+	pthread_mutex_t eat;
 }	t_table;
 
-typedef struct s_routine
+typedef struct s_routine_args
 {
 	t_table 		*table;
 	t_philo			*current_philosopher;
-}	t_routine;
+}	t_routine_args;

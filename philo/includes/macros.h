@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:03:49 by nechaara          #+#    #+#             */
-/*   Updated: 2024/04/28 18:34:43 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:13:11 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #define TIME_TO_DIE_INDEX 2
 #define TIME_TO_EAT_INDEX 3
 #define TIME_TO_SLEEP_INDEX 4
-#define EAT_LIMIT_INDEX 5
+#define NUMBER_OF_MEALS_INDEX 5
 // LIMITS MACROS
 #define NUMBER_OF_PHILOS_MIN 1
 #define NUMBER_OF_PHILOS_MAX 200
@@ -32,8 +32,9 @@
 #define TIME_TO_EAT_MAX INT_MAX
 #define TIME_TO_SLEEP_MIN 1
 #define TIME_TO_SLEEP_MAX INT_MAX
-// ACTIONS MACROS
-#define PHILO_DEAD 0
+// SIM MACROS
+#define PHILO_DEAD 19
+#define SIM_SUCCESS 42
 #define NULL_PARAMS -1
 // MESSAGES FOR OUTPUT MACROS
 #define FORK_TAKEN "has taken a fork"
