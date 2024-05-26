@@ -3,23 +3,23 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+         #
+#    By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/25 18:12:31 by nechaara          #+#    #+#              #
-#    Updated: 2024/04/28 18:11:31 by nechaara         ###   ########.fr        #
+#    Updated: 2024/05/23 21:14:22 by nechaara         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRCS = 	src/main.c src/output.c src/parsing.c src/parsing_utils.c \
-		src/ft_strtol.c src/init.c src/unit.c src/time.c src/init_utils.c \
-		src/routine.c src/actions.c
+SRCS = 	init_and_unit/init_and_unit.c parsing/parsing_strtol.c parsing/parsing_utils.c \
+		parsing/parsing.c thread_routine/state.c thread_routine/routine.c thread_routine/utils.c \
+		time/time.c main.c 
 
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
-CFLAGS = -g #-fsanitize=address #-Wall -Wextra -Werror -O3
+CFLAGS = #-Wall -Wextra -Werror -O3
 RM = rm -f
 
 GREEN=\033[0;32m
