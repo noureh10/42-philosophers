@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:08:59 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/22 16:00:44 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:18:38 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ int	get_time(t_table *table)
 
 	if (!table)
 		return (NULL_PARAMS);
-	pthread_mutex_lock(&table->time);
 	current_time = real_time() - table->start_time;
-	pthread_mutex_unlock(&table->time);
 	return (current_time);
 }
 

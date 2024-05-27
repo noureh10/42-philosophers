@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:51:12 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/23 21:28:29 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:31:17 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	*routine(void *args)
 	left_philosopher = get_left_philosopher(table, current_philo);
 	table->philo[current_philo].last_meal = get_time(table);
 	if (table->philo[current_philo].philosophers_id % 2 == 0)
-		ft_usleep(table, table->data.time_to_eat / MS_TRESHOLD);
+		ft_usleep(table, 60);
 	routine_loop(table, current_philo, left_philosopher);
 	return (NULL);
 }
@@ -65,6 +65,7 @@ static void	*manager_loop(t_table *table)
 {
 	size_t		index;
 	int			time;
+	int			meal_diff;
 
 	while (true)
 	{
@@ -72,14 +73,13 @@ static void	*manager_loop(t_table *table)
 		while (index < table->data.number_of_philos)
 		{
 			time = get_time(table);
-			pthread_mutex_lock(&table->meal_time);
-			if (time - table->philo[index].last_meal >= table->data.time_to_die)
+			meal_diff = get_time(table) - table->philo[index].last_meal;
+			if (meal_diff >= 0 && meal_diff >= table->data.time_to_die)
 			{
 				status_printer(table, index, DEAD);
 				pthread_mutex_unlock(&table->table);
 				return (NULL);
 			}
-			pthread_mutex_unlock(&table->meal_time);
 			if (check_hunger(table))
 				return (NULL);
 			index++;

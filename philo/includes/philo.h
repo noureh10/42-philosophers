@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 16:01:58 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/23 21:28:15 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:59:45 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,18 @@ typedef struct s_philo
 	pthread_t		philo_thread;
 	t_mutex			fork;
 	size_t			num_of_meals;
-	size_t			last_meal;
+	int				last_meal;
 	bool			is_dead;
 }	t_philo;
 
 typedef struct s_data
 {
 	size_t	number_of_philos;
-	size_t	time_to_die;
+	size_t	
+	time_to_die;
 	size_t	time_to_eat;
 	size_t	time_to_sleep;
-	int		num_of_meals;
+	size_t	num_of_meals;
 }	t_data;
 
 typedef struct s_limits
@@ -100,7 +101,6 @@ typedef struct s_table
 	bool		is_sim_finished;
 	t_mutex		table;
 	t_mutex		meal_time;
-	t_mutex		time;
 	t_mutex		print;
 }	t_table;
 

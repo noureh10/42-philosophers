@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_and_unit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 16:09:55 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/23 21:27:59 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:54:40 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ bool	init_table(t_table *table)
 	}
 	pthread_mutex_init(&table->print, NULL);
 	pthread_mutex_init(&table->table, NULL);
-	pthread_mutex_init(&table->meal_time, NULL);
-	pthread_mutex_init(&table->time, NULL);
 	return (true);
 }
 
@@ -82,10 +80,8 @@ void	unit_table(t_table *table)
 {
 	if (!table)
 		return ;
-	pthread_mutex_destroy(&table->meal_time);
 	pthread_mutex_destroy(&table->print);
 	pthread_mutex_destroy(&table->table);
-	pthread_mutex_destroy(&table->time);
 	free(table->philo);
 }
 
