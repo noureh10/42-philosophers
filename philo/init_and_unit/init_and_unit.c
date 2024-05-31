@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   init_and_unit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 16:09:55 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/27 18:54:40 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/31 09:11:20 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+static void	init_mutexes(t_table *table)
+{
+	pthread_mutex_init(&table->print, NULL);
+	pthread_mutex_init(&table->table, NULL);
+	pthread_mutex_init(&table->time, NULL);
+	pthread_mutex_init(&table->meal_time, NULL);
+	pthread_mutex_init(&table->death_mtx, NULL);
+}
 
 /**
  * @brief 
@@ -39,11 +48,11 @@ bool	init_table(t_table *table)
 		current_working_philo->num_of_meals = 0;
 		current_working_philo->last_meal = 0;
 		pthread_mutex_init(&current_working_philo->fork, NULL);
+		pthread_mutex_init(&current_working_philo->death_lock, NULL);
 		current_working_philo++;
 		i++;
 	}
-	pthread_mutex_init(&table->print, NULL);
-	pthread_mutex_init(&table->table, NULL);
+	init_mutexes(table);
 	return (true);
 }
 
@@ -78,10 +87,21 @@ t_routine_args	*set_routine_args(t_table *table)
 
 void	unit_table(t_table *table)
 {
+	size_t	index;
+
 	if (!table)
 		return ;
+	index = 0;
+	while (index < table->data.number_of_philos)
+	{
+		pthread_mutex_destroy(&table->philo[index].fork);
+		pthread_mutex_destroy(&table->philo[index].death_lock);
+		index++;
+	}
 	pthread_mutex_destroy(&table->print);
 	pthread_mutex_destroy(&table->table);
+	pthread_mutex_destroy(&table->time);
+	pthread_mutex_destroy(&table->death_mtx);
 	free(table->philo);
 }
 
@@ -96,7 +116,7 @@ bool	parsing_data(t_table *table, int ac, char **av)
 	if (av[5])
 		table->data.num_of_meals = ft_strtol(av[5], NULL, 10);
 	else
-		table->data.num_of_meals = NO_EAT_LIMIT;
+		table->data.num_of_meals = -1;
 	table->is_sim_finished = false;
 	table->start_time = 0;
 	table->philo = NULL;
