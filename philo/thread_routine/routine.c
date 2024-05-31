@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:51:12 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/27 18:31:17 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:46:08 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 static void	*routine_loop(t_table *table, size_t philo, size_t left_philo)
 {
+	size_t	num_of_meals;
+
+	num_of_meals = (size_t) table->data.num_of_meals;
 	while (!check_hunger(table))
 	{
 		if (table->data.number_of_philos != 1)
 		{
 			philo_fork(table, philo, left_philo);
 			philo_eat(table, philo, left_philo);
-			if (table->philo[philo].num_of_meals == table->data.num_of_meals)
+			if (table->philo[philo].num_of_meals == num_of_meals)
 				return (NULL);
 		}
 		philo_sleep(table, philo);
@@ -64,7 +67,6 @@ void	*routine(void *args)
 static void	*manager_loop(t_table *table)
 {
 	size_t		index;
-	int			time;
 	int			meal_diff;
 
 	while (true)
@@ -72,14 +74,11 @@ static void	*manager_loop(t_table *table)
 		index = 0;
 		while (index < table->data.number_of_philos)
 		{
-			time = get_time(table);
+			pthread_mutex_lock(&table->meal_time);
 			meal_diff = get_time(table) - table->philo[index].last_meal;
-			if (meal_diff >= 0 && meal_diff >= table->data.time_to_die)
-			{
-				status_printer(table, index, DEAD);
-				pthread_mutex_unlock(&table->table);
-				return (NULL);
-			}
+			pthread_mutex_unlock(&table->meal_time);
+			if (meal_diff >= 0 && meal_diff >= (int) table->data.time_to_die)
+				return (status_printer(table, index, DEAD), NULL);
 			if (check_hunger(table))
 				return (NULL);
 			index++;

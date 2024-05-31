@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:51:07 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/23 21:29:45 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/30 23:03:08 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,35 @@ void	philo_eat(t_table *table, size_t current_philo, size_t left_philo)
 	pthread_mutex_unlock(&table->philo[current_philo].fork);
 }
 
+/**
+ * @brief 
+ * This function locks the fork mutexes of the current philosopher and the left
+ * philosophers. We ensure that a philosopher pick up the fork in a consistent
+ * order to prevent lock order inversion, thus avoiding potential deadlocks.
+ * @param table Pointer to the table structure.
+ * @param current_philo Index of current philo.
+ * @param left_philo Index of the left philo.
+ */
 void	philo_fork(t_table *table, size_t current_philo, size_t left_philo)
 {
+	size_t	first_fork;
+	size_t	second_fork;
+
 	if (!param_checker(table, current_philo))
 		return ;
-	pthread_mutex_lock(&table->philo[current_philo].fork);
+	if (current_philo < left_philo)
+	{
+		first_fork = current_philo;
+		second_fork = left_philo;
+	}
+	else
+	{
+		first_fork = left_philo;
+		second_fork = current_philo;
+	}
+	pthread_mutex_lock(&table->philo[first_fork].fork);
 	status_printer(table, current_philo, FORK);
-	pthread_mutex_lock(&table->philo[left_philo].fork);
+	pthread_mutex_lock(&table->philo[second_fork].fork);
 	status_printer(table, current_philo, FORK);
 }
 
