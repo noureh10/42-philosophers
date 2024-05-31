@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 16:01:58 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/27 20:59:45 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/31 09:42:21 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 // ERRORS MACROS
 #define WRONG_EXEC "Error - Wrong exec ./philo [n1] [n2] [n3] [n4] ..[n5].."
-#define WRONG_ARGS "Error - Program only takes positive numbers as arguments."
+#define WRONG_ARGS "Error - Program only takes positive integers as arguments."
 #define NOT_IN_LIMITS "Error - Arguments are not within the limits."
 #define WR_NUM_OF_PHIL  "Error - Wrong range for number of philos [1 - 200]"
 #define WR_TIME_TO_DIE  "Error - Wrong range for time to die [60 - INT_MAX]"
@@ -35,9 +35,6 @@
 #define THINK_M "is thinking"
 #define DEAD_M "died"
 
-// PARSING MACRO
-#define NO_EAT_LIMIT -1
-
 // LIMITS MACROS
 #define NUMBER_OF_PHILOS_MIN 1
 #define NUMBER_OF_PHILOS_MAX 200
@@ -49,9 +46,6 @@
 #define TIME_TO_SLEEP_MAX INT_MAX
 #define NUMBER_OF_REQUIRED_MEALS_MIN 0
 #define NUMBER_OF_REQUIRED_MEALS_MAX INT_MAX
-
-//TIME MACROS
-#define MS_TRESHOLD 10
 
 //ERROR MACROS
 #define NULL_PARAMS -42
@@ -72,6 +66,7 @@ typedef struct s_philo
 	size_t			philosophers_id;
 	pthread_t		philo_thread;
 	t_mutex			fork;
+	t_mutex			death_lock;
 	size_t			num_of_meals;
 	int				last_meal;
 	bool			is_dead;
@@ -80,11 +75,10 @@ typedef struct s_philo
 typedef struct s_data
 {
 	size_t	number_of_philos;
-	size_t	
-	time_to_die;
+	size_t	time_to_die;
 	size_t	time_to_eat;
 	size_t	time_to_sleep;
-	size_t	num_of_meals;
+	int		num_of_meals;
 }	t_data;
 
 typedef struct s_limits
@@ -101,7 +95,9 @@ typedef struct s_table
 	bool		is_sim_finished;
 	t_mutex		table;
 	t_mutex		meal_time;
+	t_mutex		death_mtx;
 	t_mutex		print;
+	t_mutex		time;
 }	t_table;
 
 typedef struct s_routine_args
@@ -117,7 +113,6 @@ bool	invalid_arg(int ac, char **av);
 long	ft_strtol(const char *nptr, char **endptr, int base);
 void	set_argv_value_to_struct(t_data *values, int ac, char **av);
 int		ft_is_string_number(char *str);
-size_t	ft_strlen(char *str);
 // INIT
 bool	init_table(t_table *table);
 bool	parsing_data(t_table *table, int ac, char **av);
