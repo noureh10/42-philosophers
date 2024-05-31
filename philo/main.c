@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 16:02:34 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/21 18:07:20 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/31 09:42:17 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static bool	philo_stop(t_table *table, t_routine_args *args, pthread_t manager)
 	status = pthread_join(manager, NULL);
 	if (status != 0)
 		return (free(args), false);
+	free(args);
 	return (true);
 }
 
@@ -45,15 +46,14 @@ bool	philo_thread_startup(t_table *table)
 	t_routine_args		*routine_args;
 	size_t				index;
 	pthread_t			manager;
-	bool				return_status;
 	int					status;
 
 	routine_args = set_routine_args(table);
 	table->start_time = real_time();
 	if (!routine_args)
 		return (false);
-	index = 0;
 	status = 1;
+	index = 0;
 	while (index < table->data.number_of_philos)
 	{
 		status = pthread_create(&table->philo[index].philo_thread, NULL, \
@@ -66,16 +66,15 @@ bool	philo_thread_startup(t_table *table)
 	if (status != 0)
 		return (free(routine_args), false);
 	philo_stop(table, routine_args, manager);
-	return (return_status);
+	return (true);
 }
 
 int	main(int ac, char **av)
 {
 	t_table	table;	
-
 	if (!((ac == 5) ^ (ac == 6)))
 		return (error_handler(WRONG_EXEC));
-	if (!invalid_arg(ac, av))
+	else if (!invalid_arg(ac, av))
 		return (EXIT_FAILURE);
 	else if (!parsing_data(&table, ac, av))
 		return (EXIT_FAILURE);

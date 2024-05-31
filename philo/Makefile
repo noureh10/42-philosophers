@@ -6,7 +6,7 @@
 #    By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/25 18:12:31 by nechaara          #+#    #+#              #
-#    Updated: 2024/05/23 21:14:22 by nechaara         ###   ########.fr        #
+#    Updated: 2024/05/30 20:27:38 by nechaara         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ SRCS = 	init_and_unit/init_and_unit.c parsing/parsing_strtol.c parsing/parsing_u
 
 OBJS = $(SRCS:.c=.o)
 
-CC = gcc
-CFLAGS = #-Wall -Wextra -Werror -O3
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -O3 #-fsanitize=thread -g
 RM = rm -f
 
 GREEN=\033[0;32m
