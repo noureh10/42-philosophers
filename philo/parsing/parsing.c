@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:16:57 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/27 18:50:30 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/05/31 09:42:03 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+static bool check_argv(char **av)
+{
+	size_t		index;
+
+	index = 1;
+	while (av[index])
+		if (!ft_is_string_number(av[index++]))
+			return (error_handler(WRONG_ARGS));
+	return (true);
+}
 
 static bool	condition_checker(t_limits *limits, int ac, char **av)
 {
@@ -19,19 +30,19 @@ static bool	condition_checker(t_limits *limits, int ac, char **av)
 	set_argv_value_to_struct(&val, ac, av);
 	if (limits->arg_max.number_of_philos < val.number_of_philos
 		|| limits->arg_min.number_of_philos > val.number_of_philos)
-		return (!error_handler(WR_NUM_OF_PHIL));
+		return (error_handler(WR_NUM_OF_PHIL));
 	else if (limits->arg_max.time_to_die < val.time_to_die
 		|| limits->arg_min.time_to_die > val.time_to_die)
-		return (!error_handler(WR_TIME_TO_DIE));
+		return (error_handler(WR_TIME_TO_DIE));
 	else if (limits->arg_max.time_to_eat < val.time_to_eat
 		|| limits->arg_min.time_to_eat > val.time_to_eat)
-		return (!error_handler(WR_TIME_TO_EAT));
+		return (error_handler(WR_TIME_TO_EAT));
 	else if (limits->arg_max.time_to_sleep < val.time_to_sleep
 		|| limits->arg_min.time_to_sleep > val.time_to_sleep)
-		return (!error_handler(WR_TIME_TO_SLEEP));
+		return (error_handler(WR_TIME_TO_SLEEP));
 	if (ac == 6)
 		if (limits->arg_max.num_of_meals < val.num_of_meals)
-			return (!error_handler(WR_NUM_OF_MEALS));
+			return (error_handler(WR_NUM_OF_MEALS));
 	return (true);
 }
 
@@ -57,12 +68,9 @@ void	apply_limits(t_limits *limit)
 bool	invalid_arg(int ac, char **av)
 {
 	t_limits	limit;
-	size_t		index;
-
-	index = 1;
-	while (av[index])
-		if (!ft_is_string_number(av[index++]))
-			return (true);
+	
+	if (!check_argv(av))
+		return (true);
 	apply_limits(&limit);
 	if (condition_checker(&limit, ac, av))
 		return (true);
