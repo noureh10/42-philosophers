@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 16:01:58 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/31 09:42:21 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/06/03 01:02:11 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 // ERRORS MACROS
 #define WRONG_EXEC "Error - Wrong exec ./philo [n1] [n2] [n3] [n4] ..[n5].."
 #define WRONG_ARGS "Error - Program only takes positive integers as arguments."
-#define NOT_IN_LIMITS "Error - Arguments are not within the limits."
 #define WR_NUM_OF_PHIL  "Error - Wrong range for number of philos [1 - 200]"
 #define WR_TIME_TO_DIE  "Error - Wrong range for time to die [60 - INT_MAX]"
 #define WR_TIME_TO_EAT  "Error - Wrong range for time to eat [60 - INT_MAX]"
@@ -121,6 +120,7 @@ t_rargs	*set_routine_args(t_table *table);
 void	philo_fork(t_table *table, size_t current_philo, size_t left_philo);
 void	philo_sleep(t_table *table, size_t current_philo);
 void	philo_eat(t_table *table, size_t current_philo, size_t left_philo);
+void	philo_think(t_table *table, size_t current_philo);
 // OUTPUT
 void	status_printer(t_table *table, size_t philo_index, int print_code);
 int		error_handler(char *message);

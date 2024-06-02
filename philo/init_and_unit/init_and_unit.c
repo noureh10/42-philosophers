@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 16:09:55 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/31 09:11:20 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/06/03 01:01:45 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	unit_table(t_table *table)
 	pthread_mutex_destroy(&table->print);
 	pthread_mutex_destroy(&table->table);
 	pthread_mutex_destroy(&table->time);
+	pthread_mutex_destroy(&table->meal_time);
 	pthread_mutex_destroy(&table->death_mtx);
 	free(table->philo);
 }

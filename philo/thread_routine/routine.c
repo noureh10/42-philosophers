@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:51:12 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/29 15:46:08 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/06/03 00:43:24 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,11 @@ void	*routine(void *args)
 	current_philo = routine_args->index;
 	table = routine_args->table;
 	left_philosopher = get_left_philosopher(table, current_philo);
+	pthread_mutex_lock(&table->time);
 	table->philo[current_philo].last_meal = get_time(table);
+	pthread_mutex_unlock(&table->time);
 	if (table->philo[current_philo].philosophers_id % 2 == 0)
-		ft_usleep(table, 60);
+		ft_usleep(table, 10);
 	routine_loop(table, current_philo, left_philosopher);
 	return (NULL);
 }
@@ -74,9 +76,11 @@ static void	*manager_loop(t_table *table)
 		index = 0;
 		while (index < table->data.number_of_philos)
 		{
+			pthread_mutex_lock(&table->time);
 			pthread_mutex_lock(&table->meal_time);
 			meal_diff = get_time(table) - table->philo[index].last_meal;
 			pthread_mutex_unlock(&table->meal_time);
+			pthread_mutex_unlock(&table->time);
 			if (meal_diff >= 0 && meal_diff >= (int) table->data.time_to_die)
 				return (status_printer(table, index, DEAD), NULL);
 			if (check_hunger(table))

@@ -6,13 +6,13 @@
 /*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:16:57 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/31 09:42:03 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/06/02 15:23:39 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static bool check_argv(char **av)
+static bool	check_argv(char **av)
 {
 	size_t		index;
 
@@ -20,7 +20,7 @@ static bool check_argv(char **av)
 	while (av[index])
 		if (!ft_is_string_number(av[index++]))
 			return (error_handler(WRONG_ARGS));
-	return (true);
+	return (false);
 }
 
 static bool	condition_checker(t_limits *limits, int ac, char **av)
@@ -43,7 +43,7 @@ static bool	condition_checker(t_limits *limits, int ac, char **av)
 	if (ac == 6)
 		if (limits->arg_max.num_of_meals < val.num_of_meals)
 			return (error_handler(WR_NUM_OF_MEALS));
-	return (true);
+	return (false);
 }
 
 static void	apply_bounds(t_data *min, t_data *max)
@@ -68,8 +68,8 @@ void	apply_limits(t_limits *limit)
 bool	invalid_arg(int ac, char **av)
 {
 	t_limits	limit;
-	
-	if (!check_argv(av))
+
+	if (check_argv(av))
 		return (true);
 	apply_limits(&limit);
 	if (condition_checker(&limit, ac, av))

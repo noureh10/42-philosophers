@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 16:02:34 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/31 09:42:17 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/06/02 15:23:10 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,11 @@ bool	philo_thread_startup(t_table *table)
 
 int	main(int ac, char **av)
 {
-	t_table	table;	
+	t_table	table;
+
 	if (!((ac == 5) ^ (ac == 6)))
 		return (error_handler(WRONG_EXEC));
-	else if (!invalid_arg(ac, av))
+	else if (invalid_arg(ac, av))
 		return (EXIT_FAILURE);
 	else if (!parsing_data(&table, ac, av))
 		return (EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:10:25 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/31 09:07:37 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/06/03 01:03:28 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	set_dead_philo(t_table *table, size_t index_of_philo, bool stopsim)
 
 static void	print_death(t_table *table, size_t philo_index)
 {
-	printf("%d %ld %s\n", get_time(table), philo_index, DEAD_M);
+	printf("%d %ld %s\n", get_time(table), philo_index + 1, DEAD_M);
 	set_dead_philo(table, philo_index, true);
 }
 
@@ -72,7 +72,10 @@ bool	has_died(t_table *table)
 	{
 		pthread_mutex_lock(&table->philo[index].death_lock);
 		if (table->philo[index].is_dead)
+		{
+			pthread_mutex_unlock(&table->philo[index].death_lock);
 			return (true);
+		}
 		index++;
 		pthread_mutex_unlock(&table->philo[index].death_lock);
 	}

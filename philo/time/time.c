@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:08:59 by nechaara          #+#    #+#             */
-/*   Updated: 2024/05/30 16:25:02 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/06/03 00:40:41 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ int	get_time(t_table *table)
 
 	if (!table)
 		return (NULL_PARAMS);
-	pthread_mutex_lock(&table->time);
 	current_time = real_time() - table->start_time;
-	pthread_mutex_unlock(&table->time);
 	return (current_time);
 }
 
@@ -38,6 +36,8 @@ void	ft_usleep(t_table *table, int time)
 {
 	int	start;
 
+	if (!table)
+		return ;
 	start = get_time(table);
 	while (get_time(table) < start + time)
 		usleep(500);
