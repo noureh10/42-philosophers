@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:16:57 by nechaara          #+#    #+#             */
-/*   Updated: 2024/06/02 15:23:39 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:05:54 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static bool	condition_checker(t_limits *limits, int ac, char **av)
 		|| limits->arg_min.time_to_sleep > val.time_to_sleep)
 		return (error_handler(WR_TIME_TO_SLEEP));
 	if (ac == 6)
-		if (limits->arg_max.num_of_meals < val.num_of_meals)
+		if (limits->arg_max.num_of_meals < val.num_of_meals
+			|| limits->arg_min.num_of_meals > val.num_of_meals)
 			return (error_handler(WR_NUM_OF_MEALS));
 	return (false);
 }

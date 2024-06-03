@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 16:01:58 by nechaara          #+#    #+#             */
-/*   Updated: 2024/06/03 01:02:11 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:03:21 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_data
 	size_t	time_to_die;
 	size_t	time_to_eat;
 	size_t	time_to_sleep;
-	int		num_of_meals;
+	size_t	num_of_meals;
 }	t_data;
 
 typedef struct s_limits

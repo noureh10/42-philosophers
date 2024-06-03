@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+         #
+#    By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/25 18:12:31 by nechaara          #+#    #+#              #
-#    Updated: 2024/06/03 01:01:06 by nechaara         ###   ########.fr        #
+#    Updated: 2024/06/03 13:10:33 by nechaara         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCS = 	init_and_unit/init_and_unit.c parsing/parsing_strtol.c parsing/parsing_u
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -O3
+CFLAGS = -Wall -Wextra -Werror -O3 #-fsanitize=thread
 RM = rm -f
 
 GREEN=\033[0;32m
