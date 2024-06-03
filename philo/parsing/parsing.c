@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:16:57 by nechaara          #+#    #+#             */
-/*   Updated: 2024/06/03 13:05:54 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:43:53 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	apply_bounds(t_data *min, t_data *max)
 	max->num_of_meals = NUMBER_OF_REQUIRED_MEALS_MAX;
 }
 
-void	apply_limits(t_limits *limit)
+static void	apply_limits(t_limits *limit)
 {
 	apply_bounds(&limit->arg_min, &limit->arg_max);
 }

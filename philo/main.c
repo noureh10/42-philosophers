@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 16:02:34 by nechaara          #+#    #+#             */
-/*   Updated: 2024/06/02 15:23:10 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:51:56 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,16 @@ static bool	philo_stop(t_table *table, t_routine_args *args, pthread_t manager)
 	return (true);
 }
 
+/**
+ * @brief 
+ * The philo thread startup function starts all the thread for the simulation.
+ * It also create a independent thread that will be here to monitor all the
+ * thread. When the sim is finished, it joins all the threads to be safely
+ * exited.
+ * @param table The reference of the table. 
+ * @return true The simulation went well.
+ * @return false Problem during the sim startup.
+ */
 bool	philo_thread_startup(t_table *table)
 {
 	t_routine_args		*routine_args;

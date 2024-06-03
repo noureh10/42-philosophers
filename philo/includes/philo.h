@@ -6,7 +6,7 @@
 /*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 16:01:58 by nechaara          #+#    #+#             */
-/*   Updated: 2024/06/03 13:03:21 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:43:36 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ t_rargs	*set_routine_args(t_table *table);
 void	philo_fork(t_table *table, size_t current_philo, size_t left_philo);
 void	philo_sleep(t_table *table, size_t current_philo);
 void	philo_eat(t_table *table, size_t current_philo, size_t left_philo);
-void	philo_think(t_table *table, size_t current_philo);
 // OUTPUT
 void	status_printer(t_table *table, size_t philo_index, int print_code);
 int		error_handler(char *message);

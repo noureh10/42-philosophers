@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nechaara <nechaara@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nechaara <nechaara.student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:51:12 by nechaara          #+#    #+#             */
-/*   Updated: 2024/06/03 00:43:24 by nechaara         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:46:15 by nechaara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static void	*routine_loop(t_table *table, size_t philo, size_t left_philo)
  * philosopher so each philo doesn't try to access the concurent fork on the
  * left. The routine will stop if the simulation is finished or the hunger
  * count is achieved.
- * @param args 
- * @return void* 
+ * @param args The routine args containing the reference of the table and
+ * the index of the philo.
  */
 void	*routine(void *args)
 {
@@ -96,9 +96,9 @@ static void	*manager_loop(t_table *table)
  * The manager_philosophers function binds to the manager thread. It has one
  * purpose, to check if one of the philosopher exceeded the time to die when
  * it comes to meals. If it did, the manager loop prints out the death of the
- * philosopher and the simulation ends.
- * @param args 
- * @return void* 
+ * philosopher and the simulation ends. It will also end the simulation if
+ * the number of meal is reached.
+ * @param args A pointer of the table.
  */
 void	*manager_philosophers(void *args)
 {
